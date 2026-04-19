@@ -1,0 +1,42 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() !== 'Citizen'",
+        ".write": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'Emperor'"
+      }
+    },
+    "applications": {
+      ".read": "auth !== null",
+      "$appId": {
+        ".write": "auth !== null"
+      }
+    },
+    "cities": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('role').val() !== 'Citizen'"
+    },
+    "news": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('role').val() !== 'Citizen'"
+    },
+    "stats": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "notifications": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "auth !== null"
+      }
+    },
+    "passportIndex": {
+      ".read": "auth !== null",
+      ".write": "auth !== null"
+    },
+    "adminLogs": {
+      ".read": "root.child('users').child(auth.uid).child('role').val() !== 'Citizen'",
+      ".write": "root.child('users').child(auth.uid).child('role').val() !== 'Citizen'"
+    }
+  }
+}
